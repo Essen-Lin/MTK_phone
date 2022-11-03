@@ -1,9 +1,14 @@
 ## MTK 產學合作計畫 
 <!-- vim-markdown-toc GFM -->
 * [Goal](#計畫目標)
-    - [Performance Model](#P)
+    - [Performance Model](#Performance-model)
     - [FPSGO](#FPSGO)
-        
+
+* [設備規格](#設備規格)
+    - [Pixel 4/ Pixel 4XL](#Pixel-4/-Pixel-4XL)
+* [CPU Frequency](#Frequency-List)
+    - [Find Frequency](#How-to-find-frequency)
+    - [Pixel 4/ Pixel 4XL](#Pixel-4/-Pixel-4XL)
 <!-- vim-markdown-toc -->
 
 ---
