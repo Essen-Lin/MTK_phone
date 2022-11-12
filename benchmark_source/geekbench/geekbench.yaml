@@ -1,0 +1,9 @@
+config:
+  augmentations: [perf]
+
+  perf:
+    perf_type: simpleperf
+    command: stat
+    optionstring: "--use-devfreq-counters --per-core"
+    events: [raw-ase-spec, raw-br-immed-retired, raw-br-immed-spec, raw-br-indirect-spec, raw-br-mis-pred, raw-br-mis-pred-retired]
+workoads: [geekbench]
