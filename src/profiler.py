@@ -5,7 +5,6 @@ import csv
 import logging
 import re
 import subprocess
-
 from pathlib import Path
 
 logging.basicConfig(
@@ -28,12 +27,16 @@ class Profiler(object):
         logging.info("\t" + " ".join(governors))
         logging.info("")
 
+        ###
+
         policies = subprocess.run(["adb", "shell", "ls /sys/devices/system/cpu/cpufreq"], stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines()
 
         logging.info("available clusters corresponding to policies: ")
         for i in range(len(policies)):
             logging.info("\tcluster" + str(i) + ", " + policies[i])
         logging.info("")
+
+        ###
 
         frequencies = [
             i.split() for i in list(
@@ -49,6 +52,8 @@ class Profiler(object):
             logging.info("\t" + " ".join(frequencies[i]))
             logging.info("")
 
+        ###
+
         raws = subprocess.run(["adb", "shell", "simpleperf", "list", "raw", "|", "grep", "raw-", "|", "awk", "'{print $1}'"],
                               stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines()
 
@@ -57,17 +62,32 @@ class Profiler(object):
             logging.info("\t" + ", ".join(raws[i:i + 6]))
         logging.info("")
 
+        ###
+
         simpleperf = "simpleperf stat --use-devfreq-counters --per-core"
 
         logging.info("set simpleperf: ")
         logging.info("\t" + simpleperf)
         logging.info("")
+
+        ###
+
+        cwd = "cd " + str(Path(benchmark).parent)
+        bin = "./" + Path(benchmark).name
+
         logging.info("set benchmark: ")
         logging.info("\t" + benchmark)
+        logging.info("\t" + cwd)
+        logging.info("\t" + bin)
+
+        ###
+
         logging.info("")
         logging.info("set outputfile: ")
         logging.info("\t" + outputfile)
         logging.info("")
+
+        ###
 
         sheet = [["setup core", "runtime core", "frequency", "coverage", "event", "count", "time"]]
 
@@ -75,11 +95,15 @@ class Profiler(object):
         logging.info("\t" + " ".join(sheet[0]))
         logging.info("")
 
+        ###
+
         governor = governors[2]
 
         logging.info("set governor policy: ")
         logging.info("\t" + governor)
         logging.info("")
+
+        ###
 
         for idx in range(len(policies)):
             core = re.findall(r'\d+', policies[idx])[0]
@@ -99,6 +123,8 @@ class Profiler(object):
             logging.info("\t" + taskset)
             logging.info("")
 
+            ###
+
             for frequency in [frequencies[idx][0], frequencies[idx][int((len(frequencies[idx]) - 1) / 2)], frequencies[idx][-1]]:
                 subprocess.run(["adb", "shell", "echo 0 > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_min_freq"])
                 subprocess.run(["adb", "shell", "echo 99999999 > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_max_freq"])
@@ -107,6 +133,8 @@ class Profiler(object):
                 logging.info("set frequency: ")
                 logging.info("\t" + frequency)
                 logging.info("")
+
+                ###
 
                 subprocess.run(["adb", "shell", "echo " + frequency + " > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_min_freq"])
 
@@ -117,6 +145,8 @@ class Profiler(object):
                     logging.info("\t" + minFreqency.ljust(10, " ") + ", core" + str(i))
                 logging.info("")
 
+                ###
+
                 subprocess.run(["adb", "shell", "echo " + frequency + " > /sys/devices/system/cpu/cpufreq/" + policies[idx] + "/scaling_max_freq"])
 
                 logging.info("set max frequencies corresponding to cores: ")
@@ -126,6 +156,8 @@ class Profiler(object):
                     logging.info("\t" + maxFreqency.ljust(10, " ") + ", core" + str(i))
                 logging.info("")
 
+                ###
+
                 logging.info("set cur frequencies corresponding to cores: ")
                 for i, curFreqency in enumerate(
                         subprocess.run(["adb", "shell", "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"],
@@ -133,19 +165,23 @@ class Profiler(object):
                     logging.info("\t" + curFreqency.ljust(10, " ") + ", core" + str(i))
                 logging.info("")
 
+                ###
+
                 for i in range(0, len(raws), 6):
                     pmus = ",".join(raws[i:i + 6])
 
+                    cmd = cwd + " && " + taskset + " " + simpleperf + " -e " + pmus + " " + bin
+
                     logging.info("run command: ")
-                    logging.info("\tadb shell " + taskset + " " + simpleperf + " -e " + pmus + " " + benchmark)
+                    logging.info("\t" + cmd)
                     print("")
 
+                    ###
+
                     datas = [
-                        j for j in [
-                            k.split() for k in filter(
-                                None,
-                                subprocess.run(["adb", "shell", taskset, simpleperf, "-e", pmus, benchmark], stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())
-                        ] if (j[0] == core or j[0] == 'Total')
+                        j for j in [k.split() for k in filter(None,
+                                                              subprocess.run(["adb", "shell", cmd], stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())]
+                        if (len(j) and ((j[0] == core and j[-1] == "(100%)") or j[0] == 'Total'))
                     ]
 
                     for j in range(0, len(datas)):
@@ -158,6 +194,8 @@ class Profiler(object):
                             print(item.ljust(27, " "), end="")
                         print("")
                     print("")
+
+                    ###
 
         Path(outputfile).parent.mkdir(parents=True, exist_ok=True)
 
@@ -172,6 +210,7 @@ class Profiler(object):
 
         logging.info("set output file: ")
         logging.info(outputfile)
+
 
 def main(argv):
     profiler = Profiler()

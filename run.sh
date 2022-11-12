@@ -7,13 +7,13 @@
 ##consumer - fail
 
 ##network
-python3 src/profiler.py -b "/data/local/tmp/Mibench/aarch64/network/dijkstra/dijkstra_small input.dat > output_small.dat" -o "/data/result/Mibench/dijkstra/dijkstra_small.csv"
-python3 src/profiler.py -b "/data/local/tmp/Mibench/aarch64/network/dijkstra/dijkstra_large input.dat > output_large.dat" -o "/data/result/Mibench/dijkstra/dijkstra_large.csv"
+python3 src/profiler.py -b "/data/local/tmp/Mibench/aarch64/network/dijkstra/dijkstra_small input.dat" -o "benchmark_data\Mibench\dijkstra/dijkstra_small.csv"
+python3 src/profiler.py -b "/data/local/tmp/Mibench/aarch64/network/dijkstra/dijkstra_large input.dat" -o "benchmark_data\Mibench\dijkstra//dijkstra_large.csv"
 
 # LMbench
 
 # ## rd
-# python3 src/profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m rd" -o "bin/LMbench/bw_mem/512m/rd.csv"
+# python3 src/profiler.py -b "/data/test/lmbench/bw_mem 512m rd" -o "bin/LMbench/bw_mem/512m/rd.csv"
 # ## frd
 # python3 src/profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m frd" -o "bin/LMbench/bw_mem/512m/frd.csv"
 # ## cp
@@ -26,7 +26,7 @@ python3 src/profiler.py -b "/data/local/tmp/Mibench/aarch64/network/dijkstra/dij
 # python3 src/profiler.py -b "/data/local/tmp/LMbench/bw_mem 512m bcopy" -o "bin/LMbench/bw_mem/512m/bcopy.csv"
 
 # # Dhrystone
-# python3 src/profiler.py -b "/data/local/tmp/Dhrystone/dry" -o "bin/Dhrystone/dry.csv"
+python3 src/profiler.py -b "/data/local/tmp/dhrystone/v2.2/dry" -o "bin/Dhrystone/dry.csv"
 
 # # SPEC CPU® 2017
 
