@@ -7,7 +7,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score 
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "../benchmark_data"
+directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/benchmark_data"
 dfs = []
 
 for file in Path(directory).glob("**/*.csv"):

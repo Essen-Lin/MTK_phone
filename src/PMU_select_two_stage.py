@@ -83,9 +83,9 @@ def draw_cluster_by_CPU_Cluster(cluster):
   X = [[i] for i in PMU_avg]
   HCA = linkage(X,metric='euclidean',method='single')
   PMU_cluster_list = leaves_list(HCA)
-  fig = plt.figure(figsize=(50, 20))
-  dn = dendrogram(HCA)
-  plt.show()
+  # fig = plt.figure(figsize=(30, 20))
+  # dn = dendrogram(HCA)
+  # plt.show()
   # print(PMU_cluster_list)
   return PMU_cluster_list
 
@@ -98,10 +98,10 @@ def draw_cluster_r(cluster,r_limit):
   pmu_y = [r_value[i]for i in PMU_cluster_list]
   # print(pmu_x)
   # print(pmu_y)
-  fig = plt.figure(figsize=(50, 20))
-  plt.xticks(rotation=90)
-  plt.bar(pmu_x,pmu_y)
-  plt.show()
+  # fig = plt.figure(figsize=(30, 20))
+  # plt.xticks(rotation=90)
+  # plt.bar(pmu_x,pmu_y)
+  # plt.show()
   for i in range(len(pmu_y)):
     if pmu_y[i] > r_limit:
       selection_list.append(pmu_x[i])
@@ -109,9 +109,6 @@ def draw_cluster_r(cluster,r_limit):
   
   return selection_list
 
-selection_list = draw_cluster_r(0,0.75)
-print(selection_list)
-      
 # #利用Cluster leaf 的順序做長條圖
 # #根據論文中提到的演算法來篩選PMU
 
@@ -133,8 +130,6 @@ def train_dataset(cluster,selection_list):
   train_data['time'] = np.array(time)
   return  pd.DataFrame(train_data)
 
-data = train_dataset(0,selection_list)
-print(data)
 
 def train_model(cluster,selection_list):
   data = train_dataset(cluster,selection_list)
@@ -145,30 +140,56 @@ def train_model(cluster,selection_list):
 
   regressor = LinearRegression()
   model=regressor.fit(X_train, y_train)
-#   y_predict = regressor.predict(X_test)
-#   score1=r2_score(y_test,y_predict)
 
-#   print("model.intercept_:",model.intercept_)
-#   print("model.coef_:",model.coef_)
-
-#   print("R:",model.score(X, y))
-#   print("Validation R: ",score1)
   return model.score(X, y)
 
-
-def pmu_selection_r_squared(dataset,selection_list):
+def pmu_selection_r_squared(cluster,selection_list):
   pmu_list = ["raw-cpu-cycles"]
   result = ["raw-cpu-cycles"]
-  best_r = train_model(dataset,pmu_list)
+  best_r = train_model(cluster,pmu_list)
+
   for i in (selection_list):
     pmu_list.append(i)
-    new_R = train_model(dataset,pmu_list)
-    print(new_R)
+    pmu_list = list(dict.fromkeys(pmu_list))
+    new_R = train_model(cluster,pmu_list)
     if new_R > best_r:
       result.append(i)
       best_r = new_R
     else:
       pmu_list.remove(i)
   return result
+  
+def final_model(cluster,selection_list):
+  data = train_dataset(cluster,selection_list)
 
-print(pmu_selection_r_squared(data,selection_list))
+  y = data.iloc[:, len(selection_list)]
+  X = data.iloc[:, 0:len(selection_list)]
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
+
+  regressor = LinearRegression()
+  model=regressor.fit(X_train, y_train)
+  y_predict = regressor.predict(X_test)
+  score1=r2_score(y_test,y_predict)
+  print("model.intercept_:",model.intercept_)
+  print("model.coef_:",model.coef_)
+
+  print("R:",model.score(X, y))
+  print("Validation R: ",score1)
+  return model.score(X, y)
+
+
+def print_train_model():
+  R_value = 0.75
+  CPU = []
+
+  for cluster in range(cluster_num):
+    CPU.append(dfs[0]['setup core'][PMU_num*cluster_num*cluster])
+    PMU_selection = pmu_selection_r_squared(cluster,draw_cluster_r(cluster,R_value))
+    print('CPU:',dfs[0]['setup core'][PMU_num*cluster_num*cluster],'PMU_list:',PMU_selection)
+    final_model(cluster,PMU_selection)
+
+def main():
+  print_train_model()
+
+if __name__ == "__main__":
+    main()
