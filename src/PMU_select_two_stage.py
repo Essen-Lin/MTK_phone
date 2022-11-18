@@ -173,12 +173,21 @@ def final_model(cluster,selection_list):
   model=regressor.fit(X_train, y_train)
   y_predict = regressor.predict(X_test)
   score1=r2_score(y_test,y_predict)
+
+  diff_ratio = 0
+  y_test = list(y_test)
+  for i in range(len(y_predict)):
+    diff_ratio = diff_ratio + ((y_predict[i]-y_test[i])/y_test[i])
+  diff_ratio = diff_ratio / len(y_predict)
+
+  score1=r2_score(y_test,y_predict)
+
   print("model.intercept_:",model.intercept_)
   print("model.coef_:",model.coef_)
 
   print("R:",model.score(X, y))
   print("Validation R: ",score1)
-  return model.score(X, y)
+  print("Different Ration: ",diff_ratio,"%")
 
 
 def print_train_model():

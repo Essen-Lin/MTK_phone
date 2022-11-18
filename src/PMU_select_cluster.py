@@ -82,7 +82,7 @@ def train_model(cluster,R_value):
 
   y = data.iloc[:, len(selection_list)]
   X = data.iloc[:, 0:len(selection_list)]
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
 
   regressor = LinearRegression()
   model=regressor.fit(X_train, y_train)
@@ -90,11 +90,20 @@ def train_model(cluster,R_value):
   y_predict = regressor.predict(X_test)
   score1=r2_score(y_test,y_predict)
 
+  diff_ratio = 0
+  y_test = list(y_test)
+  for i in range(len(y_predict)):
+    diff_ratio = diff_ratio + ((y_predict[i]-y_test[i])/y_test[i])
+  diff_ratio = diff_ratio / len(y_predict)
+
+  score1=r2_score(y_test,y_predict)
+
   print("model.intercept_:",model.intercept_)
   print("model.coef_:",model.coef_)
 
   print("R:",model.score(X, y))
   print("Validation R: ",score1)
+  print("Different Ration: ",diff_ratio,"%")
 
 
 def print_train_model():

@@ -48,11 +48,12 @@ def generate_PMU_R (cluster,frequency):
 
 def PMU_selection_by_each_freq(cluster_r,r_value):
   PMU_select =[]
-  # for i in range(len(PMU_list)):
-  #   if abs(cluster_r[i]) >= r_value:
-  #     PMU_select.append(PMU_list[i])
-  # return PMU_select
-  
+  for i in range(len(PMU_list)):
+    if abs(cluster_r[i]) >= r_value:
+      PMU_select.append(PMU_list[i])
+
+  return PMU_select
+
 def print_PMU_by_each_freq():
   R_value = 0.99
   CPU = []
@@ -91,7 +92,7 @@ def train_model(cluster,frequency,R_value):
 
   y = data.iloc[:, len(selection_list)]
   X = data.iloc[:, 0:len(selection_list)]
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
 
   regressor = LinearRegression()
   model=regressor.fit(X_train, y_train)
@@ -99,11 +100,20 @@ def train_model(cluster,frequency,R_value):
   y_predict = regressor.predict(X_test)
   score1=r2_score(y_test,y_predict)
 
+  diff_ratio = 0
+  y_test = list(y_test)
+  for i in range(len(y_predict)):
+    diff_ratio = diff_ratio + ((y_predict[i]-y_test[i])/y_test[i])
+  diff_ratio = diff_ratio / len(y_predict)
+
+  score1=r2_score(y_test,y_predict)
+
   print("model.intercept_:",model.intercept_)
   print("model.coef_:",model.coef_)
 
   print("R:",model.score(X, y))
   print("Validation R: ",score1)
+  print("Different Ration: ",diff_ratio,"%")
   
 
 
