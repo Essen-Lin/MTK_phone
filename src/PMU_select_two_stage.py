@@ -157,7 +157,10 @@ def pmu_selection_r_squared(cluster,selection_list):
       best_r = new_R
     else:
       pmu_list.remove(i)
-  return result
+  if len(result) > 6:
+    return result[0:7]
+  else:
+    return result
   
 def final_model(cluster,selection_list):
   data = train_dataset(cluster,selection_list)

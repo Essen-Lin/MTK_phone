@@ -7,7 +7,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score 
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/benchmark_data"
+directory = "../benchmark_data"
 dfs = []
 
 for file in Path(directory).glob("**/*.csv"):
@@ -48,12 +48,11 @@ def generate_PMU_R (cluster,frequency):
 
 def PMU_selection_by_each_freq(cluster_r,r_value):
   PMU_select =[]
-  for i in range(len(PMU_list)):
-    if abs(cluster_r[i]) >= r_value:
-      PMU_select.append(PMU_list[i])
-
-  return PMU_select
-
+  # for i in range(len(PMU_list)):
+  #   if abs(cluster_r[i]) >= r_value:
+  #     PMU_select.append(PMU_list[i])
+  # return PMU_select
+  
 def print_PMU_by_each_freq():
   R_value = 0.99
   CPU = []

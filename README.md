@@ -1,11 +1,11 @@
 ## MTK 產學合作計畫 
 <!-- vim-markdown-toc GFM -->
 * [計畫目標](#計畫目標)
-    - [Performance Model](#Performance-model)
-    - [FPSGO](#FPSGO)
+    - [Performance Model](#計畫目標)
+    - [FPSGO](#計畫目標)
 
 * [設備規格](#設備規格)
-    - [Pixel 4/ Pixel 4XL](#Pixel-4/-Pixel-4XL)
+    - [Pixel 4/ Pixel 4XL](#設備規格)
 
 * [基本設定](#基本設定)
     - [找頻率](#How-to-find-frequency)
@@ -13,37 +13,32 @@
     - [定頻](#How-to-find-frequency)
 
 * [Simpleperf](#Simpleperf)
-    - [安裝]()
-    - [基礎指令]()
-    - [App Profiler]()
-    - [Script]()
+    - [安裝](#simpleperf)
+    - [Script](#simpleperf)
 
-* [Benchmark]()
-    - [Mibench]()
-        + [Source Code]()
-        + [執行]()
-        + [Data]()
-    - [Lmbench]()
-        + [Source Code]()
-        + [執行]()
-        + [Data]()
-    - [Longbottom]()
-        + [Source Code]()
-        + [執行]()
-        + [Data]()
-* [PMU Selection]() 
-    - [作法一]()
-    - [作法二]()
-    - [作法三(論文做法)]()
+* [Benchmark](#benchmark)
+    - [Mibench](#benchmark)
+        + [Source Code](#benchmark)
+        + [執行](#benchmark)
+        + [Data](#benchmark)
+    - [Lmbench](#benchmark)
+        + [Source Code](#benchmark)
+        + [執行](#benchmark)
+        + [Data](#benchmark)
+    - [Longbottom](#benchmark)
+        + [Source Code](#benchmark)
+        + [執行](#benchmark)
+        + [Data](#benchmark)
+* [PMU Selection](#pmu-selection) 
+    - [作法一](#pmu-selection)
+    - [作法二](#pmu-selection)
+    - [作法三(論文做法)](#pmu-selection)
 * [ML model]() 
     - [Linear Regression]()
         + [介紹]()
         + [作法簡介]()
         + [範例]()
-    - [ANN]()
-        + [介紹]()
-        + [作法簡介]()
-        + [範例]()
+
 * [Reference]()
     - [報告]()
 <!-- vim-markdown-toc -->
@@ -132,3 +127,75 @@ adb shell "chmod 440 /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
 ```
 
 ### Simpleperf
+
+- 安裝
+```
+git clone https://android.googlesource.com/platform/prebuilts/simpleperf
+
+#Find simpleperf 執行檔
+cd E:\pixel\simpleperf\bin\android\arm64
+adb push ./simpleperf [目的path]
+```
+
+- script
+```
+python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
+```
+
+
+### Benchmark
+- Mibench
+    + [Source Code]() 
+    + 執行
+    ```
+    ```
+    + [Data]()
+
+- Lmbench
+    + [Source Code]() 
+    + 執行
+    ```
+    ```
+    + [Data]()
+
+- Longbottom
+    + [Source Code]() 
+    + 執行
+    + [Data]()
+
+- Dhrystone
+    + [Source Code]() 
+    + 執行
+    ```
+    ```
+    + [Data]()
+
+### PMU Selection
+- 作法一
+    + 在高中低頻 大中小核，相關係數大於0.99的PMU
+    + [Source Code]() 
+    ```
+    python3 PMU_select_freq.py
+    ```
+    + [Result]()
+- 作法二
+    + 分大中小核，把不同頻點一起考慮，相關係數大於0.9的PMU
+    + [Source Code]() 
+     ```
+    python3 PMU_select_cluster.py
+    ```
+    + [Result]()
+- 作法三(論文做法)
+    + Hierarchical Clustering 分群+透過多次Linear Regression 篩選 PMU
+    + [Source Code]() 
+     ```
+    python3 PMU_select_two_stage.py
+    ```
+    + [Result]()
+- 作法四
+    + 透過兩層filter篩選出PMU 並且生成Linear Regression Model
+    + [Source Code]() 
+     ```
+    python3 PMU_select_two_stage.py
+    ```
+    + [Result]()
