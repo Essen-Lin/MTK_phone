@@ -12,7 +12,7 @@ import statsmodels.api  as  sm
 # Read each CSV file in dir "path/to/root_dir"
 directory = "../benchmark_data"
 dfs = []
-
+ 
 for file in Path(directory).glob("**/*.csv"):
     dfs.append(pd.read_csv(file))
 # Put the dataframes to a single dataframe
@@ -167,7 +167,7 @@ def final_model(cluster,selection_list):
 
   y = data.iloc[:, len(selection_list)]
   X = data.iloc[:, 0:len(selection_list)]
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
 
   regressor = LinearRegression()
   model=regressor.fit(X_train, y_train)
@@ -195,9 +195,9 @@ def print_train_model():
   CPU = []
 
   for cluster in range(cluster_num):
-    CPU.append(dfs[0]['setup core'][PMU_num*cluster_num*cluster])
+    # CPU.append(dfs[0]['setup core'][PMU_num*cluster_num*cluster])
     PMU_selection = pmu_selection_r_squared(cluster,draw_cluster_r(cluster,R_value))
-    print('CPU:',dfs[0]['setup core'][PMU_num*cluster_num*cluster],'PMU_list:',PMU_selection)
+    print('CPU:',dfs[0]['setup core'][PMU_num*frequency_num*cluster],'PMU_list:',PMU_selection)
     final_model(cluster,PMU_selection)
 
 def main():

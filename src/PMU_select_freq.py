@@ -92,7 +92,7 @@ def train_model(cluster,frequency,R_value):
 
   y = data.iloc[:, len(selection_list)]
   X = data.iloc[:, 0:len(selection_list)]
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
 
   regressor = LinearRegression()
   model=regressor.fit(X_train, y_train)
@@ -100,20 +100,11 @@ def train_model(cluster,frequency,R_value):
   y_predict = regressor.predict(X_test)
   score1=r2_score(y_test,y_predict)
 
-  diff_ratio = 0
-  y_test = list(y_test)
-  for i in range(len(y_predict)):
-    diff_ratio = diff_ratio + ((y_predict[i]-y_test[i])/y_test[i])
-  diff_ratio = diff_ratio / len(y_predict)
-
-  score1=r2_score(y_test,y_predict)
-
   print("model.intercept_:",model.intercept_)
   print("model.coef_:",model.coef_)
 
   print("R:",model.score(X, y))
   print("Validation R: ",score1)
-  print("Different Ration: ",diff_ratio,"%")
   
 
 
@@ -124,10 +115,10 @@ def print_train_model():
 
   for i in range(cluster_num):
     for j in range(frequency_num):
-      CPU.append(dfs[0]['setup core'][PMU_num*cluster_num*i])
+      CPU.append(dfs[0]['setup core'][PMU_num*frequency_num*i])
       frequency.append(dfs[0]['frequency'][PMU_num*j])
       PMU_selection = PMU_selection_by_each_freq(generate_PMU_R(i,j),R_value)
-      print('CPU:',dfs[0]['setup core'][PMU_num*cluster_num*i],'Frequency:',dfs[0]['frequency'][PMU_num*j],'PMU_list:',PMU_selection)
+      print('CPU:',dfs[0]['setup core'][PMU_num*frequency_num*i],'Frequency:',dfs[0]['frequency'][PMU_num*j],'PMU_list:',PMU_selection)
       train_model(i,j,R_value)
 
 

@@ -50,7 +50,7 @@ def generate_PMU_R (cluster):
 
 
 def PMU_selection_by_all_freq(cluster_r,r_value):
-  PMU_select =[]
+  PMU_select =[] 
   for i in range(len(PMU_list)):
     if abs(cluster_r[i]) >= r_value:
       PMU_select.append(PMU_list[i])
@@ -66,7 +66,7 @@ def train_dataset(cluster,selection_list):
     count = []
     for t in dfs:
       for frequency in range(frequency_num):
-        count.append(t['count'][list(PMU_list).index(pmu)+idx+frequency*len(PMU_list)].replace(',',''))
+          count.append(t['count'][list(PMU_list).index(pmu)+idx+frequency*len(PMU_list)].replace(',',''))
     train_data[pmu] = np.array(count)
   time = []
   for t in dfs:
@@ -111,9 +111,9 @@ def print_train_model():
   CPU = []
 
   for i in range(cluster_num):
-    CPU.append(dfs[0]['setup core'][PMU_num*cluster_num*i])
+    CPU.append(dfs[0]['setup core'][PMU_num*frequency_num*i])
     PMU_selection = PMU_selection_by_all_freq(generate_PMU_R(i),R_value)
-    print('CPU:',dfs[0]['setup core'][PMU_num*cluster_num*i],'PMU_list:',PMU_selection)
+    print('CPU:',dfs[0]['setup core'][PMU_num*frequency_num*i],'PMU_list:',PMU_selection)
     train_model(i,R_value)
 
 def main():
