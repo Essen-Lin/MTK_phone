@@ -10,7 +10,7 @@ from sklearn.metrics import r2_score
 import statsmodels.api  as  sm
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/bin/speccpu2017"
+directory = "../benchmark_data"
 dfs = []
  
 for file in Path(directory).glob("**/*.csv"):
