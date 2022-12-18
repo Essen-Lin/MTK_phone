@@ -7,7 +7,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score 
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "../benchmark_data"
+directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/D_benchmark_data"
 dfs = []
 
 for file in Path(directory).glob("**/*.csv"):
@@ -99,17 +99,26 @@ def train_model(cluster,frequency,R_value):
 
   y_predict = regressor.predict(X_test)
   score1=r2_score(y_test,y_predict)
+  
+  diff_ratio = 0
+  y_test = list(y_test)
+  for i in range(len(y_predict)):
+    diff_ratio = diff_ratio + ((y_predict[i]-y_test[i])/y_test[i])
+  diff_ratio = diff_ratio / len(y_predict)
 
-  print("model.intercept_:",model.intercept_)
-  print("model.coef_:",model.coef_)
+  score1=r2_score(y_test,y_predict)
 
-  print("R:",model.score(X, y))
-  print("Validation R: ",score1)
+  # print("model.intercept_:",model.intercept_)
+  # print("model.coef_:",model.coef_)
+
+  # print("R:",model.score(X, y))
+  # print("Validation R: ",score1)
+  print("Different Ration: ",diff_ratio,"%")
   
 
 
 def print_train_model():
-  R_value = 0.99
+  R_value = 0.95
   CPU = []
   frequency = []
 

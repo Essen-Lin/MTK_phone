@@ -7,7 +7,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score 
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "../benchmark_data"
+directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/D_benchmark_data"
 dfs = []
 
 for file in Path(directory).glob("**/*.csv"):
@@ -49,14 +49,33 @@ def generate_PMU_R (cluster):
     return PMU_R
 
 
-def PMU_selection_by_all_freq(cluster_r,r_value):
+def PMU_filter_count_zero(cluster):
+  PMU_count_zero_set =set()
+  for i in range(PMU_num):
+      count = []
+      for j in range(frequency_num):
+        pmu_c = (int)((cluster*frequency_num+j)*PMU_num)
+        count = count + (list)(convert_float(df['count'][i + pmu_c]))
+      if all(item == 0 for item in count):
+        PMU_count_zero_set.add(PMU_list[i])
+  return PMU_count_zero_set
+
+
+def PMU_selection_by_all_freq(cluster,r_value):
+  cluster_r = generate_PMU_R(cluster)
+
+  cluster_r_sort = sorted(cluster_r)
   PMU_select =[] 
-  for i in range(len(PMU_list)):
-    if abs(cluster_r[i]) >= r_value:
-      PMU_select.append(PMU_list[i])
+  PMU_filter = PMU_filter_count_zero(cluster)
 
-  return PMU_select
+  for i in cluster_r_sort[PMU_num-6:PMU_num]:
+    if i > r_value:
+      PMU_select.append(PMU_list[cluster_r.index(i)])
 
+  PMU_select_set = set([i for i in PMU_select])
+  result = list(PMU_select_set - PMU_filter)
+
+  return result
 
 def train_dataset(cluster,selection_list):
   train_data ={}
@@ -77,7 +96,7 @@ def train_dataset(cluster,selection_list):
 
 
 def train_model(cluster,R_value):
-  selection_list = PMU_selection_by_all_freq(generate_PMU_R(cluster),R_value)
+  selection_list = PMU_selection_by_all_freq(cluster,R_value)
   data = train_dataset(cluster,selection_list)
 
   y = data.iloc[:, len(selection_list)]
@@ -98,13 +117,13 @@ def train_model(cluster,R_value):
 
   score1=r2_score(y_test,y_predict)
 
-  print("model.intercept_:",model.intercept_)
-  print("model.coef_:",model.coef_)
+  # print("model.intercept_:",model.intercept_)
+  # print("model.coef_:",model.coef_)
 
-  print("R:",model.score(X, y))
-  print("Validation R: ",score1)
+  # print("R:",model.score(X, y))
+  # print("Validation R: ",score1)
   print("Different Ration: ",diff_ratio,"%")
-
+  
 
 def print_train_model():
   R_value = 0.9
@@ -112,7 +131,7 @@ def print_train_model():
 
   for i in range(cluster_num):
     CPU.append(dfs[0]['setup core'][PMU_num*frequency_num*i])
-    PMU_selection = PMU_selection_by_all_freq(generate_PMU_R(i),R_value)
+    PMU_selection = PMU_selection_by_all_freq(i,R_value)
     print('CPU:',dfs[0]['setup core'][PMU_num*frequency_num*i],'PMU_list:',PMU_selection)
     train_model(i,R_value)
 

@@ -10,7 +10,7 @@ from sklearn.metrics import r2_score
 import statsmodels.api  as  sm
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "../benchmark_data"
+directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/bin/speccpu2017"
 dfs = []
  
 for file in Path(directory).glob("**/*.csv"):
@@ -182,11 +182,11 @@ def final_model(cluster,selection_list):
 
   score1=r2_score(y_test,y_predict)
 
-  print("model.intercept_:",model.intercept_)
-  print("model.coef_:",model.coef_)
+  # print("model.intercept_:",model.intercept_)
+  # print("model.coef_:",model.coef_)
 
-  print("R:",model.score(X, y))
-  print("Validation R: ",score1)
+  # print("R:",model.score(X, y))
+  # print("Validation R: ",score1)
   print("Different Ration: ",diff_ratio,"%")
 
 
