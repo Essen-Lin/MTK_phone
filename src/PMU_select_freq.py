@@ -5,9 +5,10 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score 
+import csv
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/D_benchmark_data"
+directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/benchmark_data/pixel4XL/Mi_Lm"
 dfs = []
 
 for file in Path(directory).glob("**/*.csv"):
@@ -103,7 +104,8 @@ def train_model(cluster,frequency,R_value):
   diff_ratio = 0
   y_test = list(y_test)
   for i in range(len(y_predict)):
-    diff_ratio = diff_ratio + ((y_predict[i]-y_test[i])/y_test[i])
+    diff_ratio = diff_ratio + abs((y_predict[i]-y_test[i])/y_test[i])
+    print("predict time:", y_predict[i],"real time:", y_test[i])
   diff_ratio = diff_ratio / len(y_predict)
 
   score1=r2_score(y_test,y_predict)
@@ -113,12 +115,12 @@ def train_model(cluster,frequency,R_value):
 
   # print("R:",model.score(X, y))
   # print("Validation R: ",score1)
-  print("Different Ration: ",diff_ratio,"%")
+  print("Different Ration: ",diff_ratio*100,"%")
   
 
 
 def print_train_model():
-  R_value = 0.95
+  R_value = 0.99
   CPU = []
   frequency = []
 

@@ -1,0 +1,4 @@
+Cluster (CPU),PMU 1,PMU2,PMU 3,PMU 4,PMU 5,PMU 6,Validation R,Different Ratio
+0,raw-exc-fiq,raw-l1i-cache-refill,raw-exc-irq, , , ,0.9997975912108065,1.3043717116535458%
+4,raw-l2d-cache-wb-clean,raw-exc-trap-fiq,raw-dsb-spec,raw-l1i-cache-refill,raw-l2d-cache-inval,raw-exc-irq,0.8814180683954054,22.581274626369968%
+7,raw-l2d-cache-wb-clean,raw-exc-irq,raw-dsb-spec,raw-l2d-cache-inval,raw-l1i-cache-refill, ,0.9531458079563564,32.06486424530674%

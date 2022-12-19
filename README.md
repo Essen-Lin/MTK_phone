@@ -1,47 +1,16 @@
 ## MTK 產學合作計畫 
-<!-- vim-markdown-toc GFM -->
-* [計畫目標](#計畫目標)
-    - [Performance Model](#計畫目標)
-    - [FPSGO](#計畫目標)
 
-* [設備規格](#設備規格)
-    - [Pixel 4/ Pixel 4XL](#設備規格)
+<!-- TOC -->
 
-* [基本設定](#基本設定)
-    - [找頻率](#How-to-find-frequency)
-    - [定核](#How-to-find-frequency)
-    - [定頻](#How-to-find-frequency)
+- [MTK 產學合作計畫](#mtk-%E7%94%A2%E5%AD%B8%E5%90%88%E4%BD%9C%E8%A8%88%E7%95%AB)
+    - [計畫目標](#%E8%A8%88%E7%95%AB%E7%9B%AE%E6%A8%99)
+    - [設備規格](#%E8%A8%AD%E5%82%99%E8%A6%8F%E6%A0%BC)
+    - [基本設定](#%E5%9F%BA%E6%9C%AC%E8%A8%AD%E5%AE%9A)
+    - [Simpleperf](#simpleperf)
+    - [Benchmark](#benchmark)
+    - [PMU Selection](#pmu-selection)
 
-* [Simpleperf](#Simpleperf)
-    - [安裝](#simpleperf)
-    - [Script](#simpleperf)
-
-* [Benchmark](#benchmark)
-    - [Mibench](#benchmark)
-        + [Source Code](#benchmark)
-        + [執行](#benchmark)
-        + [Data](#benchmark)
-    - [Lmbench](#benchmark)
-        + [Source Code](#benchmark)
-        + [執行](#benchmark)
-        + [Data](#benchmark)
-    - [Longbottom](#benchmark)
-        + [Source Code](#benchmark)
-        + [執行](#benchmark)
-        + [Data](#benchmark)
-* [PMU Selection](#pmu-selection) 
-    - [作法一](#pmu-selection)
-    - [作法二](#pmu-selection)
-    - [作法三(論文做法)](#pmu-selection)
-* [ML model]() 
-    - [Linear Regression]()
-        + [介紹]()
-        + [作法簡介]()
-        + [範例]()
-
-* [Reference]()
-    - [報告]()
-<!-- vim-markdown-toc -->
+<!-- /TOC -->
 
 ---
 
@@ -71,6 +40,7 @@
 | Little Cluster (CPU0) 	| 300000 	| 403200 	|  499200 	|  576000 	|  672000 	|  768000 	|  844800 	|  940800 	| 1036800 	| 1113600 	| 1209600 	| 1305600 	| 1382400 	| 1478400 	| 1555200 	| 1632000 	| 1708800 	| 1785600 	|         	|         	|
 | Medium Cluster (CPU4) 	| 710400 	| 825600 	|  940800 	| 1056000 	| 1171200 	| 1286400 	| 1401600 	| 1497600 	| 1612800 	| 1708800 	| 1804800 	| 1920000 	| 2016000 	| 2131200 	| 2227200 	| 2323200 	| 2419200 	|         	|         	|         	|
 | Big Cluster (CPU7)    	| 825600 	| 940800 	| 1056000 	| 1171200 	| 1286400 	| 1401600 	| 1497600 	| 1612800 	| 1708800 	| 1804800 	| 1920000 	| 2016000 	| 2131200 	| 2227200 	| 2323200 	| 2419200 	| 2534400 	| 2649600 	| 2745600 	| 2841600 	|
+
 ### 基本設定
 
 - 找頻率

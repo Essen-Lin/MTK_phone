@@ -1,0 +1,4 @@
+Cluster (CPU),PMU 1,PMU2,PMU 3,PMU 4,PMU 5,PMU 6,PMU 7,Validation R,Different Ratio
+0,raw-cpu-cycles,raw-br-immed-retired,raw-br-retired,raw-pc-write-spec,raw-br-pred,raw-exc-irq,raw-exc-fiq,0.9979239311426311,5.447279181512194%
+4,raw-cpu-cycles,raw-inst-retired,raw-inst-spec,raw-br-indirect-spec,raw-stall-frontend,raw-br-mis-pred-retired,raw-br-mis-pred,0.20448026912962158,38.42658565154813%
+7,raw-cpu-cycles,raw-inst-retired,raw-inst-spec,raw-br-indirect-spec,raw-stall-frontend,raw-br-mis-pred-retired,raw-br-mis-pred,0.5471758733905534,17.4358794094112%
