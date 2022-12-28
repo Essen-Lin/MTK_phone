@@ -113,18 +113,17 @@ python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
 ```
 
 
-### Benchmark
+<!-- ### Benchmark
 - Mibench
-    + [Source Code]() 
     + 執行
     ```
     ```
     + [Data]()
 
 - Lmbench
-    + [Source Code]() 
     + 執行
     ```
+    ./bw_mem 512m [執行檔]
     ```
     + [Data]()
 
@@ -137,35 +136,36 @@ python3 profiler.py [-h] [-b BENCHMARK] [-o OUTPUTFILE]
     + [Source Code]() 
     + 執行
     ```
+    ./dry
     ```
-    + [Data]()
+    + [Data]() -->
 
 ### PMU Selection
 - 作法一
     + 在高中低頻 大中小核，相關係數大於0.99的PMU
-    + [Source Code]() 
+    + [Source Code](https://github.com/Essen-Lin/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/tree/master/src) 
     ```
     python3 PMU_select_freq.py
     ```
-    + [Result]()
+    + [Result](https://github.com/Essen-Lin/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/tree/master/src)
 - 作法二
     + 分大中小核，把不同頻點一起考慮，相關係數大於0.9的PMU
-    + [Source Code]() 
+    + [Source Code](https://github.com/Essen-Lin/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/tree/master/src) 
      ```
     python3 PMU_select_cluster.py
     ```
-    + [Result]()
+    + [Result](https://github.com/Essen-Lin/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/tree/master/src)
 - 作法三(論文做法)
     + Hierarchical Clustering 分群+透過多次Linear Regression 篩選 PMU
-    + [Source Code]() 
+    + [Source Code](https://github.com/Essen-Lin/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/tree/master/src) 
      ```
     python3 PMU_select_two_stage.py
     ```
-    + [Result]()
+    + [Result](https://github.com/Essen-Lin/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/tree/master/src)
 - 作法四
     + 透過兩層filter篩選出PMU 並且生成Linear Regression Model
-    + [Source Code]() 
+    + [Source Code](https://github.com/Essen-Lin/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/tree/master/src) 
      ```
-    python3 PMU_select_two_stage.py
+    python3 PMU_select_filter.py
     ```
-    + [Result]()
+
