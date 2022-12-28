@@ -1,4 +1,4 @@
 Cluster (CPU),PMU 1,PMU2,PMU 3,PMU 4,PMU 5,PMU 6,Validation R,Different Ratio
 0,raw-exc-irq,raw-exc-fiq, , , , ,0.9970651652963092,8.024911330082569%
-4,raw-dsb-spec,raw-exc-irq,raw-exc-trap-fiq, , , ,0.9987854723712748,7.604145631384914%
-7,raw-dsb-spec,raw-exc-irq,raw-l2d-cache-inval, , , ,0.9889700272938633,8.415347849538355%
+4,raw-exc-irq,raw-dsb-spec,raw-exc-trap-fiq, , , ,0.9987854723712748,7.604145631384991%
+7,raw-l2d-cache-inval,raw-exc-irq,raw-dsb-spec, , , ,0.9889700272938619,8.415347849537671%

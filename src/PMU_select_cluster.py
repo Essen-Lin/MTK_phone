@@ -8,7 +8,7 @@ from sklearn.metrics import r2_score
 import csv
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/benchmark_data/pixel4XL"
+directory = "../benchmark_data/pixel4XL"
 dfs = []
 
 for file in Path(directory).glob("**/*.csv"):
@@ -132,7 +132,7 @@ def print_train_model():
   R_value = 0.9
   CPU = []
 
-  with open('/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/result/cluster/cluster_pmu_4XL.csv', 'w', newline='') as csvfile:
+  with open('../result/cluster/cluster_pmu_4XL.csv', 'w', newline='') as csvfile:
   # 建立 CSV 檔寫入器
     writer = csv.writer(csvfile)
     # 寫入一列資料

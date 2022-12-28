@@ -11,7 +11,7 @@ import statsmodels.api  as  sm
 import csv
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/benchmark_data/pixel4XL/Mi_Lm"
+directory = "../benchmark_data/pixel4XL/Mi_Lm"
 dfs = []
  
 for file in Path(directory).glob("**/*.csv"):
@@ -179,7 +179,7 @@ def final_model(cluster,selection_list):
   y_test = list(y_test)
   for i in range(len(y_predict)):
     diff_ratio = diff_ratio + abs((y_predict[i]-y_test[i])/y_test[i])
-    print("predict time:", y_predict[i],"real time:", y_test[i])
+    # print("predict time:", y_predict[i],"real time:", y_test[i])
   diff_ratio = 100* diff_ratio / len(y_predict)
 
   Validation_R=r2_score(y_test,y_predict)
@@ -202,7 +202,7 @@ def print_train_model():
   #   print('CPU:',dfs[0]['setup core'][PMU_num*frequency_num*cluster],'PMU_list:',PMU_selection)
   #   final_model(cluster,PMU_selection)
 
-  with open('/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/result/two_stage/two_stage_pmu_4XL/"""""/....csv', 'w', newline='') as csvfile:
+  with open('../result/two_stage/two_stage_pmu_4XL.csv', 'w', newline='') as csvfile:
   # 建立 CSV 檔寫入器
     writer = csv.writer(csvfile)
     # 寫入一列資料
