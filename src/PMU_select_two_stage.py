@@ -168,7 +168,7 @@ def final_model(cluster,selection_list):
 
   y = data.iloc[:, len(selection_list)]
   X = data.iloc[:, 0:len(selection_list)]
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
 
   regressor = LinearRegression()
   model=regressor.fit(X_train, y_train)
@@ -202,7 +202,7 @@ def print_train_model():
   #   print('CPU:',dfs[0]['setup core'][PMU_num*frequency_num*cluster],'PMU_list:',PMU_selection)
   #   final_model(cluster,PMU_selection)
 
-  with open('/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/result/two_stage/two_stage_pmu.csv', 'w', newline='') as csvfile:
+  with open('/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/result/two_stage/two_stage_pmu_4XL/"""""/....csv', 'w', newline='') as csvfile:
   # 建立 CSV 檔寫入器
     writer = csv.writer(csvfile)
     # 寫入一列資料

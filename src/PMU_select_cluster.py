@@ -8,7 +8,7 @@ from sklearn.metrics import r2_score
 import csv
 
 # Read each CSV file in dir "path/to/root_dir"
-directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/benchmark_data/pixel4XL/Mi_Lm"
+directory = "/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/benchmark_data/pixel4XL"
 dfs = []
 
 for file in Path(directory).glob("**/*.csv"):
@@ -20,6 +20,8 @@ PMU_list = dfs[0]['event'][0:150]
 PMU_num = len(PMU_list)
 frequency_num = 3
 cluster_num = (int)((len(dfs[0])/frequency_num)/PMU_num)
+print(dfs[0])
+# print(cluster_num)
 
 def convert_float(num):
   b = [float(i.replace(",","")) for i in num]
@@ -114,7 +116,7 @@ def train_model(cluster,R_value):
   y_test = list(y_test)
   for i in range(len(y_predict)):
     diff_ratio = diff_ratio + abs((y_predict[i]-y_test[i])/y_test[i])
-    print("predict time:", y_predict[i],"real time:", y_test[i])
+    # print("predict time:", y_predict[i],"real time:", y_test[i])
   diff_ratio = diff_ratio*100 / len(y_predict)
 
   Validation_R=r2_score(y_test,y_predict)
@@ -130,7 +132,7 @@ def print_train_model():
   R_value = 0.9
   CPU = []
 
-  with open('/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/result/cluster/cluster_pmu.csv', 'w', newline='') as csvfile:
+  with open('/Users/essen/Desktop/MTK_experiment/Performance-Prediction-and-Scheduling-on-Heterogeneous-CPUs/result/cluster/cluster_pmu_4XL.csv', 'w', newline='') as csvfile:
   # 建立 CSV 檔寫入器
     writer = csv.writer(csvfile)
     # 寫入一列資料

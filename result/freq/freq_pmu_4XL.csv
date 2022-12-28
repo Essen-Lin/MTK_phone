@@ -1,0 +1,10 @@
+Cluster (CPU),Frequency,PMU 1,PMU2,PMU 3,PMU 4,PMU 5,PMU 6,Validation R,Different Ratio
+0,300000,raw-exc-fiq,raw-exc-irq,raw-bus-cycles,raw-cpu-cycles, , ,0.9999561087726949,1.083615661754487%
+0,1036800,raw-exc-fiq,raw-exc-irq,raw-cpu-cycles,raw-bus-cycles, , ,0.9995435972882736,4.161508978116237%
+0,1785600,raw-exc-fiq,raw-exc-irq,raw-bus-cycles,raw-cpu-cycles, , ,0.9973703282665215,3.0856673411768187%
+4,300000,raw-inst-spec,raw-exc-trap-fiq,raw-dsb-spec,raw-exc-irq,raw-bus-cycles,raw-cpu-cycles,0.9994200659168739,2.508898245304897%
+4,1036800,raw-dsb-spec,raw-exc-irq,raw-bus-cycles,raw-cpu-cycles, , ,0.9947537609056466,3.9336993889419998%
+4,1785600,raw-bus-cycles,raw-cpu-cycles,raw-exc-irq, , , ,0.9996575080169446,3.1389992675597864%
+7,300000,raw-inst-spec,raw-dsb-spec,raw-exc-irq,raw-cpu-cycles,raw-bus-cycles, ,0.9938218628320222,4.018321971989925%
+7,1036800,raw-dsb-spec,raw-cpu-cycles,raw-bus-cycles,raw-exc-irq, , ,0.9989958400982437,3.0407316359199807%
+7,1785600,raw-cpu-cycles,raw-exc-irq,raw-bus-cycles, , , ,0.9939823149519644,10.376971766582251%
